@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 
 Route::post('create-user',[UserController::class,'createUser']);
 Route::get('get-user',[UserController::class,'getUser']);
+Route::get('get-user/{id}',[UserController::class,'getUserDetail']);

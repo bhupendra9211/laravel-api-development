@@ -48,4 +48,16 @@ class UserController extends Controller
         $responseCode = 200;
         return response()->json($result,$responseCode);
     }
+    public function getUserDetail($id){
+        $user = User::find($id);
+        if(!$user){
+            $result = array('status' => false, 'message' => "user not found",404);
+            $responseCode = 404; // not found user
+            return response()->json($result,$responseCode);
+        }
+        // $result = array('status' => true, 'message' => 'User List', 'data' => $users);
+        $result = array('status' => true, 'message' => "user found", 'data' => $user);
+        $responseCode = 200;
+        return response()->json($result,$responseCode);
+    }
 }
