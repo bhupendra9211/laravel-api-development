@@ -10,6 +10,35 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     //
+    public function updateUser(Request $request,$id){
+        $user = User::find($id);
+        if(!$user){
+            // return response()->json(['status' => false,'message'=>'user not found'],404);
+            $result = array('status'=>false,'message'=>'user not found');
+            $responseCode = 404;
+            return response()->json($result,$responseCode);
+        }
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|string|unique:users,email,'.$id, // Added email validation and uniqueness check
+        ]);
+        if ($validator->fails()) {
+            $result = array(
+                'status' => false,
+                'message' => 'Validation errors occurred',
+                'error_message' => $validator->errors()
+            );
+            return response()->json($result, 400); // Bad request
+        }
+       
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+        $result = array('status'=>true,'message'=>'user updated sucessfully','data' => $user);
+        $responseCode = 200;
+
+        return response()->json($result,$responseCode);
+    }
     public function createUser(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
