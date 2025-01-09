@@ -133,6 +133,8 @@ class UserController extends Controller
             $user = Auth::user();
 
             // $token = $user->createToken('MyApp')->accessToken;
+            // $token = $user->createToken('token-name', ['server:update'])->plainTextToken;
+            // $token = $user->createToken('MyApp')->plainTextToken;
 
             $result = array('status'=>true,'message'=>'Login sucessfully',"data"=>$user);
             $responseCode = 200;
