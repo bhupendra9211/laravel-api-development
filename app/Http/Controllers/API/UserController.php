@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use Auth;
 
 class UserController extends Controller
 {
@@ -112,4 +113,39 @@ class UserController extends Controller
 
         return response()->json($result,$responseCode);
     }
+    public function login(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $result = array(
+                'status' => false,
+                'message' => 'Validation errors occurred',
+                'error_message' => $validator->errors()
+            );
+            return response()->json($result, 400); // Bad request
+        }
+
+        $credentials = $request->only("email","password");
+
+        if(Auth::attempt($credentials)){
+            $user = Auth::user();
+
+            // $token = $user->createToken('MyApp')->accessToken;
+
+            $result = array('status'=>true,'message'=>'Login sucessfully',"data"=>$user);
+            $responseCode = 200;
+    
+            return response()->json($result,$responseCode);
+        }else{
+            $result = array('status'=>false,'message'=>'Invalid Login');
+            $responseCode = 401;
+    
+            return response()->json($result,$responseCode);
+        }
+
+    }
+
+
 }
