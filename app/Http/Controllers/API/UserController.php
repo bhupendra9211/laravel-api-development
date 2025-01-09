@@ -89,4 +89,20 @@ class UserController extends Controller
         $responseCode = 200;
         return response()->json($result,$responseCode);
     }
+    public function deleteUser($id){
+        $user = User::find($id);
+        if(!$user){
+            // return response()->json(['status' => false,'message'=>'user not found'],404);
+            $result = array('status'=>false,'message'=>'user not found');
+            $responseCode = 404;
+            return response()->json($result,$responseCode);
+        }
+
+        $user->delete();
+
+        $result = array('status'=>true,'message'=>'user deleted sucessfully');
+        $responseCode = 200;
+
+        return response()->json($result,$responseCode);
+    }
 }
