@@ -8,8 +8,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('create-user',[UserController::class,'createUser']);
-Route::put('update-user/{id}',[UserController::class,'updateUser']);
-Route::delete('delete-user/{id}',[UserController::class,'deleteUser']);
-Route::get('get-users',[UserController::class,'getUsers']);
-Route::get('get-user/{id}',[UserController::class,'getUserDetail']);
+// Route::post('create-user',[UserController::class,'createUser']);
+// Route::put('update-user/{id}',[UserController::class,'updateUser']);
+// Route::delete('delete-user/{id}',[UserController::class,'deleteUser']);
+// Route::get('get-users',[UserController::class,'getUsers']);
+// Route::get('get-user/{id}',[UserController::class,'getUserDetail']);
+
+Route::get('/users', [UserController::class, 'getUsers']);
+Route::post('/users/create', [UserController::class, 'createUser']);
