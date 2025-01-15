@@ -15,3 +15,4 @@ Route::put('update-user/{id}',[UserController::class,'updateUser']);
 Route::delete('delete-user/{id}',[UserController::class,'deleteUser']);
 Route::get('get-users',[UserController::class,'getUsers']);
 Route::get('get-user/{id}',[UserController::class,'getUserDetail']);
+//test
